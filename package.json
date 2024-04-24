@@ -1,0 +1,22 @@
+{
+  "name": "@bitfootco/jorden",
+  "version": "0.0.1",
+  "description": "A minimalist boilerplate React framework",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfootco/jorden.git"
+  },
+  "author": "The Bitfoot Company",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bitfootco/jorden/issues"
+  },
+  "homepage": "https://github.com/bitfootco/jorden#readme"
+}
