@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
 import child_process from "child_process";
+import chalk from "chalk";
 import fs from "fs-extra";
 import packageTemplate from "../templates/package.template.json";
 import path from "path";
 import inquirer from "inquirer";
+
+const log = console.log;
 
 // Function to escape special regex characters
 function escapeRegExp(string: string) {
@@ -34,7 +37,7 @@ const excludedItems = ["node_modules", "bin", ".git", "dist", "templates"];
 // Ensure the target directory exists before proceeding
 function ensureTargetDirectoryExists(target: string) {
   fs.ensureDirSync(target);
-  console.log(`Target directory "${target}" ensured.`);
+  log(chalk.green(`Jorden >`) + `Target directory "${target}" ensured.`);
 }
 
 // This function will copy all files and directories from source to target
@@ -53,7 +56,7 @@ function copyStructure(source: string, target: string, callback: () => void) {
         console.error("Error copying files:", err);
         process.exit(1);
       }
-      console.log(`Project copied to ${targetDirectory}`);
+      log(chalk.green("Jorden >") + " Project structure copied successfully.");
       callback();
     },
   );
@@ -74,15 +77,16 @@ function createPackageJson(target: string, answers: any) {
     .replace("{{description}}", answers.description);
 
   fs.writeFileSync(path.join(target, "package.json"), template);
-  console.log("package.json created successfully.");
+  log(chalk.green("Jorden >") + " package.json created successfully.");
 }
 
 // This function will change directory and install npm dependencies
 function changeDirAndInstall(target: string) {
   process.chdir(target);
-  console.log(`Changed working directory to ${target}`);
-  console.log("Installing dependencies...");
+  log(chalk.green(`Jorden > `) + ` Changed working directory to ${target}`);
+  log(chalk.green(`Jorden > `) + ` Installing dependencies...`);
   child_process.execSync("npm install", { stdio: "inherit" });
+  log(chalk.green(`Jorden > `) + ` Dependencies installed successfully.`);
 }
 
 // This function will prompt the user for project details
@@ -138,7 +142,10 @@ async function askQuestions(targetDirectoryName: string | undefined) {
 
 function main() {
   askQuestions(targetDirectoryName).then((answers) => {
-    console.log("Project will be created in:", answers.targetDirectoryName);
+    log(
+      chalk.green("Jorden >") +
+        ` Creating project in ${answers.targetDirectoryName}...`,
+    );
     const targetDirectory = path.resolve(
       process.cwd(),
       answers.targetDirectoryName,
