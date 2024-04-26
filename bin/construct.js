@@ -22,7 +22,7 @@ if (!targetDirectoryName) {
 const targetDirectory = path.resolve(process.cwd(), targetDirectoryName);
 
 // Define an array of directories and files to exclude from the copy process
-const excludedItems = ["node_modules", "bin", ".git"];
+const excludedItems = ["node_modules", "bin", ".git", "dist"];
 
 // Ensure the target directory exists before proceeding
 function ensureTargetDirectoryExists(target) {

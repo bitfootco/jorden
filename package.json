@@ -9,14 +9,14 @@
   "scripts": {
     "test": "jest",
     "dev": "webpack-dev-server --mode=development",
-    "build": "webpack --mode=production"
+    "build": "ncc build bin/construct.js -o dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bitfootco/jorden.git"
   },
   "bin": {
-    "create-jorden-app": "bin/construct.js"
+    "create-jorden-app": "dist/construct.js"
   },
   "author": "The Bitfoot Company",
   "license": "ISC",
@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/bitfootco/jorden#readme",
   "dependencies": {
-    "fs-extra": "^11.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -34,10 +33,12 @@
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
+    "@vercel/ncc": "^0.38.1",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "fs-extra": "^11.2.0",
     "prettier": "3.2.5",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
