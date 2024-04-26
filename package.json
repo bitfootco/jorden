@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "build": "vite build",
     "dev": "vite serve",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build": "ncc build bin/construct.ts -o dist"
   },
   "repository": {
     "type": "git",
@@ -36,21 +36,13 @@
     "@vercel/ncc": "^0.38.1",
     "@vitejs/plugin-react": "^4.2.1",
     "chalk": "^5.3.0",
-    "copy-webpack-plugin": "^12.0.2",
-    "css-loader": "^7.1.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "fs-extra": "^11.2.0",
     "inquirer": "^9.2.19",
     "prettier": "3.2.5",
-    "style-loader": "^4.0.0",
-    "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.7.1",
-    "vite": "^5.2.10",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "vite": "^5.2.10"
   }
 }
