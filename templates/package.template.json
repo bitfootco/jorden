@@ -4,7 +4,6 @@
   "description": "{{description}}",
   "type": "module",
   "scripts": {
-    "test": "jest",
     "build": "vite build",
     "dev": "vite serve",
     "preview": "vite preview"

@@ -4,7 +4,6 @@
   "description": "A minimalist boilerplate React framework",
   "type": "module",
   "scripts": {
-    "test": "jest",
     "dev": "vite serve",
     "preview": "vite preview",
     "build": "ncc build bin/construct.ts -o dist"
