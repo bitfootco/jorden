@@ -5,8 +5,10 @@ import chalk from "chalk";
 import fs from "fs-extra";
 import packageTemplate from "../templates/package.template.json";
 import path from "path";
+import { fileURLToPath } from "url";
 import inquirer, { Answers } from "inquirer";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const log = console.log;
 
 function escapeRegExp(text: string) {
@@ -15,13 +17,11 @@ function escapeRegExp(text: string) {
 
 const sourceDirectory = path.join(__dirname, "..");
 
-// Function to ensure target directory exists
 function ensureTargetDirectoryExists(target: string) {
   fs.ensureDirSync(target);
   log(chalk.green("Jorden >") + ` Target directory "${target}" ensured.`);
 }
 
-// Function to copy structure
 function copyStructure(source: string, target: string, callback: () => void) {
   const excludedItems = ["node_modules", "bin", ".git", "dist", "templates"];
   fs.copy(
@@ -41,7 +41,6 @@ function copyStructure(source: string, target: string, callback: () => void) {
   );
 }
 
-// Function to create package.json
 function createPackageJson(target: string, answers: Answers) {
   let template = JSON.stringify(packageTemplate, null, 2);
   const repoRegex = new RegExp(escapeRegExp("{{repositoryUrl}}"), "g");
@@ -55,7 +54,6 @@ function createPackageJson(target: string, answers: Answers) {
   log(chalk.green("Jorden >") + " package.json created successfully.");
 }
 
-// Function to install dependencies
 function changeDirAndInstall(target: string) {
   process.chdir(target);
   log(chalk.green("Jorden >") + ` Changed working directory to ${target}`);
@@ -64,7 +62,6 @@ function changeDirAndInstall(target: string) {
   log(chalk.green("Jorden >") + ` Dependencies installed successfully.`);
 }
 
-// Function to prompt user for project details
 async function askQuestions() {
   const questions = [
     {
@@ -98,7 +95,6 @@ async function askQuestions() {
   return inquirer.prompt(questions);
 }
 
-// Main function to run the app
 function main() {
   askQuestions().then((answers) => {
     const targetDirectory = path.resolve(
