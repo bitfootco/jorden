@@ -21,31 +21,51 @@ function getFiles(dir, baseDir = dir, fileList = []) {
   return fileList;
 }
 
+function generateUniqueComponentName(filePath) {
+  const componentName = path.basename(path.dirname(filePath));
+  const fileName = path.basename(filePath, ".tsx");
+  const uniqueIdentifier = fileName
+    .replace(/[^a-zA-Z0-9]/g, "") // Remove non-alphanumeric characters
+    .replace(/^(\d+)/, "_$1"); // Add underscore if the name starts with a number
+  const [firstWord, ...otherWords] = uniqueIdentifier.split(/(?=[A-Z])/); // Split camelCase into words
+  const capitalizedComponentName =
+    componentName.charAt(0).toUpperCase() + componentName.slice(1);
+  const capitalizedWords = [capitalizedComponentName, firstWord, ...otherWords];
+  return capitalizedWords.join("_");
+}
+
 function createRouteDefinitions(files) {
-  return files.map((filePath) => {
+  const routeDefinitions = [];
+
+  // Check if there is a root index file
+  const rootIndexFile = files.find((file) => file === "index.tsx");
+  if (rootIndexFile) {
+    routeDefinitions.push({
+      path: "/",
+      component: "Root",
+      importPath: "./pages/index",
+    });
+  }
+
+  for (const filePath of files) {
+    if (filePath === "index.tsx") continue; // Skip the root index file
+
     const routePath = filePath
       .replace(/\/index\.tsx$/, "") // Remove 'index.tsx' for default routes
       .replace(/\.tsx$/, "") // Remove file extension for the route path
       .replace(/\[([^\]]+)\]/g, ":$1"); // Convert [param] to :param for dynamic routes
 
-    const dirPath = path.dirname(filePath); // Full directory path of the file
-    const dirName = path.basename(dirPath); // Directory name where the file is located
+    const componentName = generateUniqueComponentName(filePath);
+    const importPath = `./pages/${filePath.replace(/\.tsx$/, "")}`;
 
-    const componentName =
-      dirName !== "pages" && dirName
-        ? dirName
-        : path.basename(filePath, ".tsx"); // Use directory name unless it's the root 'pages' directory
-
-    // Ensure the file extension is removed for the import path
-    const cleanPath = filePath.replace(/\.tsx$/, "");
-    const importPath = `./pages/${cleanPath}`; // Correcting the import path relative to the routesConfig.ts file
-
-    return {
+    routeDefinitions.push({
       path: `/${routePath}`,
-      component: componentName.toUpperCase(),
+      component: componentName,
       importPath: importPath,
-    };
-  });
+    });
+  }
+
+  return routeDefinitions;
 }
 
 function generateRoutes() {
@@ -57,7 +77,7 @@ function generateRoutes() {
   const routeConfig = routeDefinitions
     .map(
       (route) =>
-        `<Route path="${route.path}" element={<${route.component} />} />`,
+        `<Route key="${route.component}" path="${route.path}" element={<${route.component} />} />,`,
     )
     .join("\n");
 

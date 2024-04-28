@@ -1,9 +1,9 @@
 
     import { Route } from 'react-router-dom';
-    import HELLO from './pages/hello/index';
-import . from './pages/index';
+    import Root from './pages/index';
+import Hello_index from './pages/hello/index';
     export const routes = [
-        <Route path="/hello" element={<HELLO />} />
-<Route path="/index" element={<. />} />
+        <Route key="Root" path="/" element={<Root />} />,
+<Route key="Hello_index" path="/hello" element={<Hello_index />} />,
     ];
   
