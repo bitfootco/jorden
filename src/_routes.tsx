@@ -1,10 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+import { Routes } from "react-router-dom";
+import { routes } from "./routesConfig";
 
-const AppRoutes = () => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-  </Routes>
-);
+const AppRoutes = () => <Routes>{routes}</Routes>;
 
 export default AppRoutes;
