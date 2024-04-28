@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import generateRoutes from "./lib/routes.plugin";
 
 export default defineConfig({
   root: "src",
@@ -14,5 +15,6 @@ export default defineConfig({
     react({
       include: "**/*.{jsx,tsx}",
     }),
+    generateRoutes(),
   ],
 });
