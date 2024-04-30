@@ -6,6 +6,9 @@ export default defineConfig({
   root: "src",
   server: {
     port: 3000,
+    watch: {
+      ignored: ["**/routesConfig.tsx"],
+    },
   },
   build: {
     // Relative to the root
