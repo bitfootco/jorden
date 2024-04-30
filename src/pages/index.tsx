@@ -1,1 +1,3 @@
-export default () => <h1>Greetings from Jorden</h1>;
+import HomePage from "../components/HomePage";
+
+export default () => <HomePage />;
